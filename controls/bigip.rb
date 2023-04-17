@@ -11,6 +11,11 @@ AS3_VERSION    = input('as3_version')
 TS_VERSION     = input('ts_version')
 FAST_VERSION   = input('fast_version')
 
+require_controls 'big-ip-atc-ready' do
+  control 'bigip-connectivity'
+  control 'cis-f5-benchmark-1.1.3'
+end
+
 control "bigip-connectivity" do
   impact 1.0
   title "BIG-IP is reachable"
