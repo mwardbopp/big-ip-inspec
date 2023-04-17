@@ -1,0 +1,4 @@
+bigip_address: aa595b1d-1250-47b6-b8b8-278540865c48.access.udf.f5.com
+user: admin
+password: Ingresslab123
+bigip_port: 443
