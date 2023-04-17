@@ -19,6 +19,26 @@ control "bigip-connectivity" do
   end
 end 
 
+control "cis-f5-benchmark-1.1.3" do                                                                     
+    impact 1.0                                                                                        
+    title "Configure Secure Password Policy (Manual)"                                                   
+    describe json(content: http("https://#{BIGIP_HOST}:#{BIGIP_PORT}/mgmt/tm/auth/password-policy",
+              auth: {user: BIGIP_USER, pass: BIGIP_PASSWORD},
+              method: 'GET',
+              ssl_verify: false).body) do
+          its('policyEnforcement') { should eq 'enabled' }
+          its('minimumLength') { should eq 14 }
+          its('requiredSpecial') { should eq 3 }
+          its('requiredUppercase') { should eq 3 }
+          its('requiredLowercase') { should eq 3 }
+          its('requiredNumeric') { should eq 3 }
+          its('minDuration') { should eq 0 }
+          its('maxDuration') { should eq 99999 }
+          its('passwordMemory') { should eq 5 }
+          its('maxLoginFailures') { should eq 3 }
+    end
+  end
+
 control "bigip-declarative-onboarding" do
   impact 1.0
   title "BIG-IP has Declarative Onboarding"
